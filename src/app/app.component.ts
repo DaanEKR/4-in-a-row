@@ -7,59 +7,50 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
+  COLUMNS = 7;
+  COLUMN_HEIGHT = 6;
+
   title = 'game';
   isplayerWin : boolean;
   isOpponentWin : boolean;
-  previousSteps = [];
-  x : number;
-  y: number;
-
-  form = new FormGroup({
-    x: new FormControl(this.x,[Validators.required]),
-  });
+  board: string[][] = [];
 
 
   ngOnInit(){
-    this.getData();
-    console.log(this.previousSteps)
-
+    for (let columnNumber = 0; columnNumber < this.COLUMNS; columnNumber++) {
+      this.board.push([]); // add empty column
+    }
   }
 
-  getData(){
-    const data = JSON.parse(localStorage.getItem('previousSteps'));
-    if(!data){
-      this.previousSteps = [];
+  // PLAYER MOVE +
+
+  // PLAYER WINS?
+
+  // COMPUER MOVE +
+
+  /// COMPUTER WINS?
+
+  turn({ column }) {
+    // THIS IS PLAYER TURN
+    if(this.board[column].length < 6){
+      this.board[column].push('you');
+      const CPUChoice = Math.floor(Math.random() * 7);
+      console.log(CPUChoice)
+      this.board[CPUChoice].push('CPU');
     } else {
-      this.previousSteps = data;
+      console.log('invalid')
     }
-  }
+    console.log(this.board);
+    // PLAYER WINS?
 
-  turn(){
-    let x =  this.form.get('x').value;
-    let y =  this.form.get('y').value;
-    console.log(y)
-    let coordinates = x + ',' + y;
-    if(this.previousSteps.includes(coordinates)) {
-      coordinates = '';
-    }
+    // -- YES
+    // --- GAME OVER
+    // -- NO
 
-    if(x < 7 && y < 6 && coordinates != ''){
-      this.previousSteps.push(coordinates);
-      localStorage.setItem("previousSteps", JSON.stringify(this.previousSteps));
-    }
-
-    for(let i = 0; i < this.previousSteps.length; i++) {
-      let firstNumber = this.previousSteps[i].charAt(0);
-      let SecondNumber = this.previousSteps[i].charAt(2);
-      let SecondNumberInt = parseInt(SecondNumber, 10)
-      let test = firstNumber+','+SecondNumber;
-
-      if(this.previousSteps.includes(test)){
-        // console.log(SecondNumberInt+1)
-      }
-    }
-    console.log(this.previousSteps)
-    this.form.reset();
+    // COMPUTER MOVE
+    // COMPUTER WINS?
+    // -- YES
+    // --- GAME OVER
   }
 }

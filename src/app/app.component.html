@@ -6,10 +6,9 @@
   <title>4 in a row</title>
 </head>
 <body>
-  <form [formGroup]="form">
-    <input formControlName="x" placeholder="x">
-    <input formControlName="y" placeholder="y">
-    <button type="submit" (click)="turn()">Submit</button>
- </form>
+  <form #addCoinForm="ngForm">
+    <input type="number" [ngModel]="0" name="column" placeholder="column number" min="0" max="{{COLUMNS - 1}}">
+    <button type="submit" (click)="turn(addCoinForm.value)">Submit</button>
+  </form>
 </body>
 </html>
