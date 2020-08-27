@@ -31,22 +31,29 @@ export class AppComponent implements OnInit {
 
   /// COMPUTER WINS?
 
+  check4(array) {
+    return array.some(function (a, i, aa) {
+      return i > 1 && a === aa[i - 2] && a === aa[i - 3];
+    });
+  }
+
   turn({ column }) {
-    // THIS IS PLAYER TURN
     if(this.board[column].length < 6){
       this.board[column].push('you');
-      const CPUChoice = Math.floor(Math.random() * 7);
-      console.log(CPUChoice)
-      this.board[CPUChoice].push('CPU');
+      if(this.check4(this.board[column])=== true){
+        console.log(this.board);
+        console.log("Won")
+        return;
+      } else {
+        const CPUChoice = Math.floor(Math.random() * 7);
+        this.board[CPUChoice].push('CPU');
+      }
     } else {
       console.log('invalid')
     }
     console.log(this.board);
     // PLAYER WINS?
 
-    // -- YES
-    // --- GAME OVER
-    // -- NO
 
     // COMPUTER MOVE
     // COMPUTER WINS?
