@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   title = 'game';
   isplayerWin : boolean;
   isOpponentWin : boolean;
+  winner : boolean = false;
   board: string[][] = [];
 
 
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit {
       if(this.check4(this.board[column])=== true){
         console.log(this.board);
         console.log("Won")
+        this.winner = !this.winner;
         return;
       } else {
         const CPUChoice = Math.floor(Math.random() * 7);
@@ -52,10 +54,6 @@ export class AppComponent implements OnInit {
       console.log('invalid')
     }
     console.log(this.board);
-    // PLAYER WINS?
-
-
-    // COMPUTER MOVE
     // COMPUTER WINS?
     // -- YES
     // --- GAME OVER
