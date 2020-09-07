@@ -6,13 +6,26 @@
   <title>4 in a row</title>
 </head>
 <body>
-  <form *ngIf="!gameOver(); else gameOverTemplate" #addCoinForm="ngForm">
+  <!-- <form *ngIf="!gameOver(); else gameOverTemplate" #addCoinForm="ngForm">
     <input type="number" [ngModel]="0" name="column" placeholder="column number" min="0" max="{{COLUMNS - 1}}">
-    <button *ngIf="!winner" type="submit" (click)="turn(addCoinForm.value)">Submit</button>
-  </form>
+    <button type="submit" (click)="turn(addCoinForm.value)">Submit</button>
+  </form> -->
+      <div class="board" *ngIf="!gameOver(); else gameOverTemplate">
+        <div *ngFor="let column of board; let index=index;">
+          <span class="cell cell--used" *ngFor="let place of column"> {{ place }}</span>
+          <span (click)="turn(index)" class="cell"></span>
+        </div>
+      </div>
+
 
   <ng-template #gameOverTemplate>
-    <h1>{{winner}}</h1>
+    <p>Won</p>
+    <div class="board">
+      <div *ngFor="let column of board; let index=index">
+        <span class="cell" *ngFor="let place of column"> {{ place }}</span>
+        <span class="cell">{{ index }}</span>
+      </div>
+    </div>
   </ng-template>
 </body>
 </html>

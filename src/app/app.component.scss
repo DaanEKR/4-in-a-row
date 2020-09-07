@@ -1,0 +1,34 @@
+.board {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // transform: rotate(180deg)
+}
+
+.cell {
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  width: 100px;
+  height: 100px;
+  background-color: #a5a5a5;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #bdbdbd;
+
+  }
+
+  &--used {
+    pointer-events: none;
+  }
+}
+
+.test {
+  background-color: green;
+}

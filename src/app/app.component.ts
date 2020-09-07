@@ -14,21 +14,15 @@ const COMPUTER_COIN = "CPU";
 export class AppComponent implements OnInit {
   COLUMNS = 7;
   COLUMN_HEIGHT = 6;
-
-  title = 'game';
-  isplayerWin: boolean;
-  isOpponentWin: boolean;
-  winner: string;
   board: string[][] = [];
-
 
   ngOnInit(){
     for (let columnNumber = 0; columnNumber < this.COLUMNS; columnNumber++) {
-      this.board.push([]); // add empty column
+      this.board.push([]);
     }
+    console.log(this.board)
   }
-  // extract last 3 items
-  // check resultive array
+
   check3(column: string[], coinType: string) {
     return column.length > 2 && column.slice(-3).every(coin => coin === coinType);
   }
@@ -37,24 +31,23 @@ export class AppComponent implements OnInit {
     return column.length > 3 && column.slice(-4).every(coin => coin === coinType);
   }
 
-  playerWins() {
+  playerWins(): boolean {
     return this.board.some(column => this.check4(column, PLAYER_COIN));
   }
 
-  computerWins() {
+  computerWins(): boolean {
     return this.board.some(column => this.check4(column, COMPUTER_COIN));
   }
 
-  gameOver() {
+  gameOver(): boolean {
     return this.playerWins() || this.computerWins();
   }
 
-  turn({ column }) {
-    if(this.board[column].length < this.COLUMN_HEIGHT) {
-      this.board[column].push(PLAYER_COIN);
+  turn(index) {
+    if(this.board[index].length < this.COLUMN_HEIGHT) {
+      this.board[index].push(PLAYER_COIN);
+      console.log( this.board[index])
       if (this.playerWins()){
-        this.gameOver();
-        this.winner = 'YOU WIN';
         return;
       }
 
@@ -62,16 +55,12 @@ export class AppComponent implements OnInit {
       this.board[CPUChoice].push(COMPUTER_COIN);
       console.log(this.board);
       if (this.computerWins()){
-        this.gameOver();
-        this.winner = 'CPU WIN';
         return;
       }
+
 
     } else {
       console.log('invalid')
     }
-    // COMPUTER WINS?
-    // -- YES
-    // --- GAME OVER
   }
 }
