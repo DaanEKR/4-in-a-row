@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { collectExternalReferences } from '@angular/compiler';
+import { cpuUsage } from 'process';
 
-const PLAYER_COIN = "You";
-const COMPUTER_COIN = "CPU";
+const PLAYER_COIN = "red";
+const COMPUTER_COIN = "yellow";
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,17 @@ const COMPUTER_COIN = "CPU";
   styleUrls: ['./app.component.scss']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   COLUMNS = 7;
   COLUMN_HEIGHT = 6;
-  board: string[][] = [];
+  board: string[][] = Array(this.COLUMNS).fill(0).map(item => []);
 
-  ngOnInit(){
-    for (let columnNumber = 0; columnNumber < this.COLUMNS; columnNumber++) {
-      this.board.push([]);
-    }
-    console.log(this.board)
+  resetBoard(): void {
+    this.board = Array(this.COLUMNS).fill(0).map(item => []);
+  }
+
+  getDummies(column: string[]): any[] {
+    return Array(this.COLUMN_HEIGHT - column.length);
   }
 
   check3(column: string[], coinType: string) {
@@ -44,23 +46,26 @@ export class AppComponent implements OnInit {
   }
 
   turn(index) {
+    console.log(this.board[index])
     if(this.board[index].length < this.COLUMN_HEIGHT) {
       this.board[index].push(PLAYER_COIN);
-      console.log( this.board[index])
       if (this.playerWins()){
         return;
       }
 
       const CPUChoice = Math.floor(Math.random() * 7);
-      this.board[CPUChoice].push(COMPUTER_COIN);
-      console.log(this.board);
+      if(this.board[CPUChoice].length < this.COLUMN_HEIGHT){
+        this.board[CPUChoice].push(COMPUTER_COIN);
+
+      }
+      // console.log(this.board);
       if (this.computerWins()){
         return;
       }
 
 
     } else {
-      console.log('invalid')
+      // console.log('invalid')
     }
   }
 }
